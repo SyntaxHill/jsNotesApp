@@ -131,5 +131,9 @@ notesHolder.addEventListener('click', (event) => {
 navbarBtn_AddNote.addEventListener('click', () => {
   dialogbox.querySelector('#noteTitle').value = '';
   dialogbox.querySelector('#noteContent').value = '';
+  dialogbox.querySelector('#submitnote').innerHTML = 'Close';
+  dialogbox.querySelector('#submitnote').addEventListener('click', () => {
+    dialogbox.close();
+  });
   dialogbox.showModal();
 });
