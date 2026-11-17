@@ -40,13 +40,17 @@ if (localStorage.length === 0) {
 
 submitNoteBtn.addEventListener('click', (event) => {
   event.preventDefault();
-  notes.unshift({
-    id: noteTitle.value,
-    title: noteTitle.value,
-    body: noteBody.value,
-    date: new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear(),
-  });
-  saveNote();
+  if (noteTitle.value.trim() !== '' && noteBody.value.trim() !== '') {
+    notes.unshift({
+      id: noteTitle.value,
+      title: noteTitle.value,
+      body: noteBody.value,
+      date: new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear(),
+    });
+    saveNote();
+  } else {
+    alert("Title Shouldn't be an empty string");
+  }
 });
 
 function saveNote() {
