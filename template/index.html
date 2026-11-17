@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../static/css/index.css">
+	<script src="../static/js/script.js" defer></script>
+	<title>Notefy - Take Notes [Offline]</title>
+</head>
+
+<body>
+	<aside class="sideBar" id="sideBar" style="grid-area: sideBar;">
+		<h1 class="appName">NOTEFY</h1>
+
+		<div id="futureDynamicContent">
+		</div>
+
+		<div class="profileShow">
+			<div id="profileImage" class="profileImage"></div>
+			<h3 id="profileName">John Doe</h3>
+		</div>
+	</aside>
+
+	<div class="navBar" style="grid-area: navBar;">
+		<div class="headText">My Notes</div>
+		<div class="options">
+			<button class="optionAddNote" id="optionAddNote" onclick="showForm()"> <span>+</span> Add Note</button>
+			<div class="modeSwtich">
+				<label id="dayMode" class="dayMode">🌞</label>
+				<label id="nightMode" class="nightMode">🌙</label>
+			</div>
+		</div>
+	</div>
+	<main class="noteHolder" id="noteHolder" style="grid-area: mainContainer;">
+	</main>
+	<dialog id="popUp" class="popUp">
+		<div class="formHead">
+			<h1>Add Note</h1>
+			<button id="closeForm" onclick="closeForm()">✖</button>
+		</div>
+		<form id="noteForm" class="noteForm">
+			<div class="titleForm">
+				<label for="noteTitle">Add Title</label>
+				<input type="text" name="noteTitle" id="noteTitle" autofocus aria-required="true">
+			</div>
+			<div class="contentForm">
+				<label for="noteContent">Content</label>
+				<textarea name="noteContent" id="noteContent" placeholder="Add note Content..." required
+					aria-required="true"></textarea>
+			</div>
+			<div class="buttonHolder">
+				<button type="button" id="CloseForm">Delete</button>
+				<button type="button" id="submitnote" onclick="submitNote()">Submit</button>
+			</div>
+		</form>
+	</dialog>
+
+</body>
+
+</html>
