@@ -42,7 +42,7 @@ submitNoteBtn.addEventListener('click', (event) => {
   event.preventDefault();
   if (noteTitle.value.trim() !== '' && noteBody.value.trim() !== '') {
     notes.unshift({
-      id: noteTitle.value,
+      id: Date.now(),
       title: noteTitle.value,
       body: noteBody.value,
       date: new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear(),
