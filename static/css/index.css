@@ -1,41 +1,24 @@
 /* CSS Custom Properties */
 :root {
-	--bg-main: #d7e8b5;
-	--bg-sidebar: #83ab83;
-	--bg-navbar: #94c094;
-	--bg-card: #dbd0c2;
-	--border-card: #E2D9CE;
+	/* Light Palette (Emerald & Ocean) */
+	--Seafoam_Green: #A8D5BA;
+	--Mint_Teal: #5B9B9A;
+	--Soft_Ocean: #4A8CBA;
+	--Deep_Teal: #1E4F5A;
+	--Forest_Sage: #2D5B4A;
+	/* Main colors [Dark] */
+	--Deep_Sapphire: #112D4E;
+	--Midnight_Teal: #0C3B40;
+	--Aurora_Green: #1C5C45;
+	--Emerald_Shadow: #0B2516;
+	--Cyber_Cyan: #00ADB5;
+	--accent-hover: var(--Deep_Teal);
+	--bg-sidebar: var(--Seafoam_Green);
+	--accent-text: rgba(255, 255, 255, 0.12);
 
-	--accent-primary: #213D2B;
-	--accent-hover: #2C5039;
-	--accent-text: #FFFFFF;
-
-	--text-brand: #213D2B;
-	--text-primary: #1A241E;
-	--text-secondary: #6B756E;
-
-	--toggle-bg: #F7F8F5;
-	--default-transition: 0.3s ease;
 }
 
 /* Dark Mode Override */
-[data-theme="dark"] {
-	--bg-main: #11181D;
-	--bg-sidebar: #182128;
-	--bg-navbar: #141D24;
-	--bg-card: #1B262E;
-	--border-card: #2A3842;
-
-	--accent-primary: #67D8B1;
-	--accent-hover: #7EE4C1;
-	--accent-text: #0D1F18;
-
-	--text-brand: #67D8B1;
-	--text-primary: #F1F5F8;
-	--text-secondary: #8B9AA6;
-
-	--toggle-bg: #1E2A33;
-}
 
 /* Global default Styles */
 * {
@@ -44,116 +27,127 @@
 	box-sizing: border-box;
 }
 
-.noteBody {
-	overflow-y: auto;
-}
-
 html,
 body {
 	height: 100%;
 	width: 100%;
 }
 
+button {
+	cursor: pointer;
+}
+
 body {
 	display: grid;
 	min-height: 100vh;
-	min-width: 100vw;
-	grid-template-columns: 0.3fr 1fr 1fr;
-	grid-template-rows: .3fr 3fr 3fr;
+	min-width: 0;
+	grid-template-columns: 0.4fr 1fr 1fr;
+	grid-template-rows: .4fr 3fr 3fr;
 	grid-template-areas: "sideBar navBar navBar"
-		"sideBar mainContainer mainContainer"
-		"sideBar mainContainer mainContainer";
+		"sideBar notesContainer notesContainer"
+		"sideBar notesContainer notesContainer";
 }
 
 
-/* Aside - SideBar*/
-aside {
+/* .sideBar - SideBar*/
+.sideBar {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	padding: 15px 0;
 	flex-direction: column;
-	background: var(--bg-sidebar);
+	background: linear-gradient(var(--Seafoam_Green), var(--Mint_Teal));
+	border-right: 5px solid var(--Deep_Sapphire);
 }
 
-aside h1 {
-	color: var(--text-brand);
+.sideBar .appName {
+	color: var(--Forest_Sage);
+	font-size: clamp(20px, 4.5vw, 40px);
+	font-weight: 800;
 }
 
-aside .profileShow {
-	width: 100%;
-	border-top: 3px solid var(--accent-primary);
+.sideBar .profileShow {
+	width: clamp(80px, 90%, 280px);
+	height: clamp(20px, 60%, 60px);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 10px;
-	padding-top: 10px;
+	background-color: rgba(255, 255, 255, 0.14);
+	backdrop-filter: blur(10px);
+	border-radius: 15px;
+	border: 1px solid rgba(255, 255, 255, 0.434);
+	box-shadow: 3px 3px 3px rgba(1, 1, 1, 0.25),
+		inset 3px 3px 5px rgba(3, 3, 3, 0.544);
 }
 
-aside .profileImage {
+/* Under Developement */
+/* .sideBar .profileImage {
 	height: 40px;
 	width: 40px;
 	background-color: black;
 	border-radius: 50%;
-}
+} */
 
-aside #profileName {
-	font-weight: 500;
-	font-size: clamp(12px, 15%, 28px);
+.sideBar .profileName {
+	font-weight: 800;
+	font-size: clamp(12px, 2vw, 28px);
+	color: var(--Forest_Sage);
 }
 
 /* NavBar */
+
 .navBar {
 	display: flex;
 	width: 100%;
-	height: 100%;
+	height: clamp(30px, 10vh, 80px);
 	align-items: center;
 	justify-content: space-between;
 	padding: 10px 10vw;
-	background-color: var(--bg-navbar);
+	background: linear-gradient(90deg, var(--Mint_Teal), var(--Seafoam_Green));
+	border-bottom: 4px solid var(--Deep_Sapphire);
 }
 
 .navBar .headText {
-	color: var(--text-primary);
+	color: var(--Deep_Teal);
 	font-size: 30px;
 	font-weight: 700;
 }
 
-.options {
+.features {
 	display: flex;
 	gap: 20px;
 }
 
-button {
+button.navAddnoteBtn {
 	display: flex;
 	align-items: center;
 	text-align: center;
 	justify-content: center;
 	gap: 5px;
 	padding: 5px;
-	height: auto;
-	width: 120px;
+	height: clamp(25px, 7vh, 55px);
+	width: clamp(120px, 8em, 220px);
 	outline: none;
-	border: 1px solid transparent;
-	border-radius: 5px;
-	color: wheat;
-	background-color: var(--accent-primary);
+	border: 0px solid transparent;
+	border-radius: 10px;
+	color: rgb(255, 255, 255);
+	background: linear-gradient(225deg, var(--Deep_Teal), var(--Mint_Teal));
 	cursor: pointer;
 	transition: all 0.2s ease;
-	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.443);
+	box-shadow: 0px 5px 10px 3px rgba(5, 5, 5, 0.459);
 }
 
-button:hover {
+button.navAddnoteBtn:hover {
 	transform: scale(0.95);
 	background-color: var(--accent-hover);
 }
 
-button:active {
+button.navAddnoteBtn:active {
 	transform: scale(0.90);
 	background-color: var(--accent-hover);
 }
 
-button span {
+button.navAddnoteBtn span {
 	font-size: 30px;
 }
 
@@ -173,13 +167,14 @@ button span {
 main {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-	/* grid-template-rows: repeat(auto-fit,minmax(300px,1fr)); */
+	grid-auto-rows: auto;
+	align-content: start;
 	justify-content: center;
 	row-gap: 1em;
 	column-gap: 1em;
 	padding: 20px;
-	background: var(--bg-main);
-	overflow-y: scroll;
+	background: linear-gradient(315deg, var(--Seafoam_Green) 10%, var(--Soft_Ocean), var(--Seafoam_Green));
+	overflow-y: auto;
 }
 
 /* No notes */
@@ -188,10 +183,12 @@ main {
 	width: 500px !important;
 	height: 80px !important;
 	align-items: center !important;
-	background-color: var(--accent-text) !important;
+	background: rgba(0, 0, 0, 0.047) !important;
+	backdrop-filter: blur(25px);
 	border-radius: 15px;
 	padding: 10px 30px;
 	justify-content: space-between;
+	box-shadow: inset 0px 0px 25px 3px rgba(255, 255, 255, 0.736);
 }
 
 .noNoteBox div h1 {
@@ -209,12 +206,19 @@ main {
 
 /* HasNote */
 .hasNote {
-	max-height: 300px;
+	min-height: 500px;
 	width: 100%;
-	background-color: var(--bg-card);
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	background: linear-gradient(135deg, #b8d8f0 0%, #bce3d8 50%, #a5decb 100%);
 	padding: 15px;
 	border-radius: 18px;
 	overflow: hidden;
+	backdrop-filter: blur(15px);
+	box-shadow: inset 0 0 50px 5px rgba(255, 255, 255, 0.411);
+	border: 1px solid white;
+	color: #13222c;
 }
 
 .hasNote button {
@@ -226,14 +230,18 @@ main {
 	align-items: center;
 	justify-content: space-between;
 	padding: 5px 0;
-	border-bottom: 3px solid var(--bg-main);
+	border-bottom: 3px solid black;
 }
 
 .noteBody {
-	max-height: 100% !important;
-	overflow-y: auto;
-	overflow-wrap: break-word;
-	word-wrap: break-word;
+	flex: 1 1 auto;
+	min-height: 0;
+	height: auto;
+	overflow-y: hidden;
+	white-space: pre-line;
+	text-align: left;
+	word-wrap: normal;
+	word-break: break-word;
 	padding-top: 10px;
 	align-items: center;
 	text-align: left;
@@ -245,113 +253,165 @@ main {
 }
 
 /* Dialog box */
-#popUp::backdrop {
-	backdrop-filter: blur(5px);
+#notesFormContainer::backdrop {
+	backdrop-filter: blur(15px);
 }
 
-#popUp[open] {
-	height: clamp(400px, 80vh, 800px);
-	width: clamp(200px, 90vw, 600px);
-	position: absolute;
+#notesFormContainer[open] {
+	box-sizing: border-box;
+	min-height: calc(100dvh - 2rem);
+	width: min(800px, calc(100vw - 2rem));
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	border: 0px;
 	border-radius: 25px;
-	padding: clamp(5px, 10%, 25px);
+	padding: clamp(1rem, 3vw, 1.5rem);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: flex-start;
+	gap: 1rem;
+	overflow: hidden;
 	z-index: 999;
+	background: linear-gradient(65deg, rgba(255, 255, 255, 0.606), #96d6b06b);
+	backdrop-filter: blur(15px);
 }
 
-#popUp[open]::-webkit-scrollbar {
+#notesFormContainer[open]::-webkit-scrollbar {
 	display: none;
 }
 
-#popUp .formHead {
+.noteInputTitle {
 	display: flex;
 	width: 100%;
-	height: clamp(15px, 15%, 30px);
+	height: auto;
+	min-height: 2rem;
+	flex: 0 0 auto;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0 30px;
+	padding: 0;
+	color: var(--Emerald_Shadow);
 }
 
-#popUp .formHead button {
+#notesFormContainer .noteInputTitle button {
 	width: fit-content;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	font-size: clamp(1.5vw, 30px, 4vw);
+	color: var(--Emerald_Shadow);
 }
 
-#popUp form {
-	min-height: 100%;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-between;
-	flex-grow: 1;
+#notesFormContainer form {
+	min-width: 100%;
+	height: fit-content;
+	overflow-y: auto;
+	display: grid;
+	grid-template-rows: 1fr 2.5fr 0.5fr;
+}
+
+#notesFormContainer form::-webkit-scrollbar {
+	width: 0;
+	color: #00ADB5;
 }
 
 .titleForm {
 	display: flex;
 	flex-direction: column;
 	min-width: 100%;
-	padding: 0 clamp(20px, 10%, 100px);
+	padding: 0 clamp(10px, 10%, 30px);
 	gap: clamp(10px, 3%, 20px);
-	margin: 10px 0;
+	/* margin: 10px 0; */
 }
 
 .titleForm label {
 	font-size: 1.5rem;
 	font-weight: 600;
-	margin-left: 5px;
+
 }
 
 .titleForm input {
-	min-height: clamp(40px, 30%, 90px);
+	min-height: clamp(30px, 50px, 100px);
 	padding: 0 10px;
 	font-size: 1.2rem;
+	background-color: #a8d5ba48;
+	box-shadow: inset 0 0 18px 5px white;
+	outline: none;
+	border-radius: 12px;
+	border: 1px solid transparent;
+
+}
+
+.titleForm input:focus {
+	outline: none;
+	border-radius: 12px;
+	border: 1px solid transparent;
+	border-color: #00ADB5;
+	box-shadow: 0 0 25px 2px #11ecf8,
+		inset 0 0 15px 5px #FFFFFF;
 }
 
 .contentForm {
 	display: flex;
+	align-items: flex-start !important;
+	justify-content: center;
+	flex: 1 1 auto;
+	height: auto;
 	flex-direction: column;
-	min-height: 100%;
-	min-width: 100%;
-	padding: 10px clamp(30px, 10%, 100px);
-	flex-grow: 1;
-	gap: clamp(10px, 3%, 20px);
+	width: 100%;
+	padding: 0 10px;
+	margin-bottom: clamp(5px, 3%, 15px);
 }
 
 .contentForm label {
 	font-size: 1.5rem;
 	font-weight: 600;
-	margin-left: 5px;
+	padding: 10px 10px;
 }
 
 .contentForm textarea {
-	flex: 1;
+	flex: 1 1 auto;
 	font: inherit;
 	field-sizing: content;
-	min-height: 0;
-	min-width: 100%;
+	min-height: 12rem;
+	width: 100% !important;
 	padding: 15px;
+	border-radius: 18px;
+	outline: 2px solid var(--Cyber_Cyan);
+	border: none;
+	background-color: rgba(255, 255, 255, 0.149);
+	backdrop-filter: blur(18px);
 }
+
+
 
 dialog form div.buttonHolder {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	justify-content: flex-end;
 	width: 100%;
-	padding: 10px clamp(30px, 10%, 100px);
-	gap: 15px;
+	padding: 0;
+	gap: 0.75rem;
+	height: fit-content;
 }
 
 .buttonHolder button {
 	box-shadow: none;
 	font-size: 1.2rem;
-	min-height: clamp(40px, 60%, 60px);
+	min-height: clamp(40px, 5rem, 60px);
+	min-width: 0;
+	flex: 1 1 7rem;
+	transition: all 0.3s ease;
+}
+
+.buttonHolder button:hover {
+	transform: scale(0.95);
+}
+
+.buttonHolder button:active {
+	transform: scale(1.1);
 }
 
 .buttonHolder button:first-child {
@@ -359,6 +419,23 @@ dialog form div.buttonHolder {
 	background-color: red;
 	border-radius: 10px;
 	border: 3px solid var(--bg-sidebar);
+}
+
+
+.buttonHolder button:last-child {
+	color: rgb(255, 255, 255);
+	background: linear-gradient(65deg, var(--Mint_Teal), var(--Deep_Teal));
+	border-radius: 10px;
+	border: 3px solid var(--bg-sidebar);
+}
+
+
+#editNote {
+	background: transparent;
+	outline: none;
+	border: none;
+	font-size: 1.3em;
+	padding-right: clamp(10px, 5%, 21px);
 }
 
 /* Responsive Mobile */
@@ -370,16 +447,18 @@ dialog form div.buttonHolder {
 		grid-template-columns: 1fr;
 		grid-template-rows: 0.1fr 1fr 0.1fr;
 		grid-template-areas: "navBar navBar navBar"
-			"mainContainer mainContainer mainContainer"
+			"notesContainer notesContainer notesContainer"
 			"sideBar sideBar sideBar";
 	}
 
-	button {
-		max-width: 100px;
+
+	.themeControl {
+		display: none;
 	}
 
-	.modeSwtich {
-		display: none;
+	#notesFormContainer[open] {
+		height: min(70dvh, 700px);
+		max-height: calc(100dvh - 2rem);
 	}
 
 	.navBar {
@@ -392,7 +471,7 @@ dialog form div.buttonHolder {
 		white-space: nowrap;
 	}
 
-	aside {
+	.sideBar {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -402,23 +481,24 @@ dialog form div.buttonHolder {
 		min-height: 10vh;
 		border: none;
 		max-width: 100vw;
+		border-top: 2px solid var(--Aurora_Green);
 	}
 
-	aside .profileShow {
+	.sideBar .profileShow {
 		display: flex;
 		border: none;
-		min-height: 100%;
+		width: clamp(100px, 40%, 120px);
 	}
 
-	.futureDynamicContent {
+	#futureDynamicContent {
 		display: none;
 	}
 
-	aside h1 {
+	.sideBar h1 {
 		font-size: 28px;
 	}
 
-	aside.sideBar {
+	.sideBar.sideBar {
 		min-height: 100%;
 	}
 
@@ -429,10 +509,13 @@ dialog form div.buttonHolder {
 
 
 	.hasNote {
-		overflow-y: hidden !important;
-		max-height: 0;
+		overflow-y: auto;
+		min-height: 450px;
+		padding: 15px 10px;
+	}
+
+	.noteBody {
 		min-height: 400px;
-		height: fit-content;
 	}
 
 	.noNoteBox {

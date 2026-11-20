@@ -1,3 +1,5 @@
 {
-  "liveServer.settings.multiRootWorkspaceName": "JsNotesApp"
+  "liveServer.settings.multiRootWorkspaceName": "JsNotesApp",
+  "chat.agent.enabled": true,
+  "agent"
 }

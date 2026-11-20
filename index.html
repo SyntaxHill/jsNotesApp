@@ -10,6 +10,7 @@
 </head>
 
 <body>
+	<!-- Status Bar -->
 	<aside class="sideBar" id="sideBar" style="grid-area: sideBar;">
 		<h1 class="appName">NOTEFY</h1>
 
@@ -18,44 +19,52 @@
 
 		<div class="profileShow">
 			<!-- <div id="profileImage" class="profileImage"></div> -->
-			<h3 id="profileName">Developed with Love <br> By @arijit.dev</h3>
+			<h3 class="profileName">@arijit.dev</h3>
 		</div>
 	</aside>
 
+	<!-- NavBar / Main Data Show -->
 	<div class="navBar" style="grid-area: navBar;">
 		<div class="headText">My Notes</div>
-		<div class="options">
-			<button class="optionAddNote" id="optionAddNote" onclick="showForm()"> <span>+</span> Add Note</button>
-			<div class="modeSwtich">
-				<label id="dayMode" class="dayMode">🌞</label>
-				<label id="nightMode" class="nightMode">🌙</label>
+		<div class="features">
+			<button class="navAddnoteBtn" id="navAddnoteBtn"> <span>+</span> Add Note</button>
+			<div class="themeControl">
+				<button id="dayModeBtn" class="dayModeBtn">🌞</button>
+				<button id="nightModeBtn" class="nightModeBtn">🌙</button>
 			</div>
 		</div>
 	</div>
-	<main class="noteHolder" id="noteHolder" style="grid-area: mainContainer;">
-	</main>
-	<dialog id="popUp" class="popUp">
-		<div class="formHead">
-			<h1>Add Note</h1>
-			<button id="closeForm" onclick="closeForm()">✖</button>
+
+	<!-- Notes Container [Dynamic Content] -->
+	<main class="notesContainer" id="notesContainer" style="grid-area: notesContainer;"></main>
+
+	<!-- Notes Form [Input and Edit and Delete Form] -->
+	<dialog id="notesFormContainer" class="notesFormContainer">
+		<!-- Head -->
+		<div class="noteInputTitle">
+			<h1 class="noteStatus">Add Note</h1>
+			<button id="closeForm" class="closeForm">✖</button>
 		</div>
-		<form id="noteForm" class="noteForm">
+		<!-- Main Body Form -->
+		<form id="notesForm" class="notesForm">
+			<!-- Note Title -->
 			<div class="titleForm">
-				<label for="noteTitle">Add Title</label>
+				<label for="noteTitle">TITLE</label>
 				<input type="text" name="noteTitle" id="noteTitle" autofocus aria-required="true">
 			</div>
+			<!-- Note Content -->
 			<div class="contentForm">
-				<label for="noteContent">Content</label>
+				<label for="noteContent">CONTENT</label>
 				<textarea name="noteContent" id="noteContent" placeholder="Add note Content..." required
 					aria-required="true"></textarea>
 			</div>
+			<!-- Note Options [Delete / Close / Submit] -->
 			<div class="buttonHolder">
-				<button type="button" id="CloseForm">Delete</button>
-				<button type="button" id="submitnote" onclick="submitNote()">Submit</button>
+				<button type="button" id="dynmChange">Delete</button>
+				<button type="button" id="submitnote">Submit</button>
 			</div>
 		</form>
 	</dialog>
-
 </body>
 
 </html>

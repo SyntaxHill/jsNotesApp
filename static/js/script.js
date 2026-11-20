@@ -1,12 +1,29 @@
+// Global Variables
+const API_key = '';
+const notes = [];
+const toggleBox = document.querySelector('dialog#notesFormContainer');
+const noteTitle = document.getElementById('noteTitle');
+const noteBody = document.getElementById('noteContent');
+const noteForm = document.getElementById('notesForm');
+const submitNoteBtn = document.getElementById('submitnote');
+const cancelNote = document.querySelector('#CloseForm');
+const notesHolder = document.querySelector('#notesContainer');
+const navbarBtn_AddNote = document.getElementById('navAddnoteBtn');
+const localKeys = Object.keys(localStorage); // Fetch LocalStorage Keys
+const saveNoteBtn = document.getElementById('submitnote');
+// ==================================================================================
+
+// No Notes Template 
 const noNoteTemplate = `<div class="noNoteBox">
 			<div>
 				<h1>No Notes Yet</h1>
 				<h2>It Seems Empty! Add One</h2>
 			</div>
-			<button type="button" onclick="showForm()" class="optionAddnote" id="optionAddnote"> <span>+</span> Add Note
+			<button type="button" class="optionAddnote" id="optionAddnote"> <span>+</span> Add Note
 			</button>
 		</div>`;
 
+// Define How the note will look like ; Templte Literals for Dynamic Data entries
 function newNoteTemplate(noteHead, noteDate, noteContent, id) {
   return `<div class="hasNote" id="hasNote" >
 			<div class="noteHead">
@@ -23,121 +40,120 @@ function newNoteTemplate(noteHead, noteDate, noteContent, id) {
 		</div>`;
 }
 
-const notes = [];
-const dialogbox = document.querySelector('dialog#popUp');
-const noteTitle = document.getElementById('noteTitle');
-const noteBody = document.getElementById('noteContent');
-const noteForm = document.getElementById('noteForm');
-const submitNoteBtn = document.getElementById('submitnote');
-const cancelNote = document.querySelector('#CloseForm');
-const notesHolder = document.querySelector('main');
-const navbarBtn_AddNote = document.getElementById('optionAddNote');
-// Null Runs before
-
-if (localStorage.length === 0) {
-  notesHolder.innerHTML = noNoteTemplate;
+// Global Functions [Status : Working fine]
+function fetchNotes() {
+  if (localStorage.length !== 0) {
+    for (x in localKeys) {
+      notes.unshift(JSON.parse(localStorage.getItem(localKeys[x])));
+    }
+  }
 }
-
-submitNoteBtn.addEventListener('click', (event) => {
-  event.preventDefault();
+// Fetch Notes from LocalStorage at DOMContentLoaded [Status : Working fine]
+document.addEventListener('DOMContentLoaded', fetchNotes()); // Fetch notes from localStorage at DOMContentLoaded
+// Save New Note Conditions [Status : Working fine]
+function dataCheck(e) {
+  console.log('Event Ok!');
+  e.preventDefault(); //Stops from reloading with invalid Content
   if (noteTitle.value.trim() !== '' && noteBody.value.trim() !== '') {
     notes.unshift({
       id: Date.now(),
       title: noteTitle.value,
-      body: noteBody.value,
-      date: new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear(),
+      content: noteBody.value,
+      date: new Date().toLocaleString('en-IN', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      }),
     });
-    saveNote();
+    updateLocalStorage();
+    toggleBox.close();
+    window.location.reload();
   } else {
-    alert("Title Shouldn't be an empty string");
+    window.alert('Data is not meaningful!');
   }
-});
-
-function saveNote() {
-  localStorage.setItem(notes[0].id, JSON.stringify(notes[0]));
-  dialogbox.close();
-  window.location.reload();
-  notes.length = 0; //Resets Note for new note
 }
-
-function genId() {
-  return (
-    new Date().getMonth() +
-    '/' +
-    new Date().getDate() +
-    '/' +
-    new Date().getFullYear() +
-    '-' +
-    new Date().getHours() +
-    '-' +
-    new Date().getMinutes()
-  );
+// Show addNote option if there is no Note [Status : Working fine]
+if (notes.length === 0) {
+  notesHolder.innerHTML = noNoteTemplate;
+} else {
+  showNotes();
 }
-
-function showForm() {
-  dialogbox.showModal();
+// Remove Confilcts b/w notes array and Localstorage [Status working fine]
+function updateLocalStorage() {
+  const getData = notes[0];
+  localStorage.setItem(notes[0].id, JSON.stringify(getData));
 }
-
-function closeForm() {
-  dialogbox.close();
-}
-
-const localKeys = Object.keys(localStorage);
-
-localKeys.forEach((key) => {
-  const note = JSON.parse(localStorage.getItem(key));
-  notesHolder.innerHTML += newNoteTemplate(note.title, note.date, note.body, note.id);
-});
-
-// Set delete Action
-function deleteThisNote(curr_id) {
-  let Getnote = localStorage.removeItem(curr_id);
-  console.log(Getnote + 'has Been deleted');
-  alert('Delitiing Initiated');
-}
-
-function openthisNote(curr_id) {
-  dialogbox.showModal();
-  console.log('Open ?', dialogbox.open);
-  const titleNote = JSON.parse(localStorage.getItem(curr_id)).title;
-  const bodyNote = JSON.parse(localStorage.getItem(curr_id)).body;
-
-  dialogbox.querySelector('#noteTitle').value = titleNote;
-  dialogbox.querySelector('#noteContent').value = bodyNote;
-
-  // Send delete confirmation
-  // NOTE for ME : Do not use .innerHTML for self-closing tags and input fields use .value instead [Learnt from 2dyas of headache bruh]
-  cancelNote.addEventListener('click', () => {
-    let conf = window.prompt('Delete this note ?', "'y' if yes 'n' if no");
-    if (conf === 'y') {
-      deleteThisNote(curr_id);
-      alert('Deleted!, Page will be reloaded');
-      dialogbox.close();
-      window.location.reload();
-      dialogbox.querySelector('#noteTitle').value = '';
-      dialogbox.querySelector('#noteContent').value = '';
-    } else {
-      dialogbox.close();
-    }
-  });
-}
-
-notesHolder.addEventListener('click', (event) => {
-  if (event.target.closest('#editNote')) {
-    let currentNote = event.target.closest('#hasNote');
-    let curr_id = currentNote.querySelector('#getNoteId').innerHTML;
-    console.log(curr_id);
-    openthisNote(curr_id);
+//Show Notes
+function showNotes() {
+  notesHolder.innerHTML = '';
+  for (i = 0; i <= notes.length - 1; i++) {
+    notesHolder.innerHTML += newNoteTemplate(
+      notes[i].title,
+      notes[i].date,
+      notes[i].content,
+      notes[i].id,
+    );
   }
-  console.log(!event.target.closest('#optionAddNote'));
+}
+
+function closeNote() {
+  toggleBox.close()
+}
+
+function openNote() {
+  toggleBox.showModal()
+}
+
+function saveNoteEdit(e, id, title, body) {
+  let targetNote = e.target.closest('.hasNote');
+  console.log(targetNote)
+  toggleBox.querySelector('#noteTitle').value = title;
+  toggleBox.querySelector('#noteContent').value = body;
+  submitNoteBtn.addEventListener('click', (e) => {
+    let newTitle = toggleBox.querySelector('#noteTitle').value;
+    let newBody = toggleBox.querySelector('#noteContent').value;
+    localStorage.setItem(id,
+      {
+        id: Date.now(),
+        title: newTitle,
+        content: newBody
+        ,
+        date: new Date().toLocaleDateString('en-IN',
+          {
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit',
+            hour: '2-digit',
+            hour12: false
+          }
+        )
+      }
+    )
+  })
+}
+// Set close action [status : Working fine]
+document.querySelector('#closeForm').addEventListener('click', () => {
+  closeNote()
+  toggleBox.querySelector('#dynmChange').innerHTML = 'Delete';
 });
 
-navbarBtn_AddNote.addEventListener('click', () => {
-  dialogbox.querySelector('#noteTitle').value = '';
-  dialogbox.querySelector('#noteContent').value = '';
-  dialogbox.querySelector('#CloseForm').innerHTML = 'Close';
-  dialogbox.querySelector('#CloseForm').addEventListener('click', () => {
-    dialogbox.close();
-  });
-  dialogbox.showModal();
-});
+
+// Saves Note
+navbarBtn_AddNote.addEventListener('click', (e) => {
+  openNote();
+  submitNoteBtn.addEventListener('click', (e) => {
+    dataCheck(e);
+  })
+})
+
+// Edit Note
+const edtNoteBtn = document.getElementById('editNote');
+
+if (edtNoteBtn) {
+  document.querySelector('main').addEventListener('click', (e) => {
+    let getclickedNoteId = e.target.closest('.hasNote').querySelector('#getNoteId').innerHTML;
+  })
+}
